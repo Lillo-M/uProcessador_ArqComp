@@ -29,8 +29,8 @@ architecture a_ULA of ULA is
 begin
 
   soma <= ('0' & operando0 ) + operando1;
-  sub  <= ('0' & operando0 ) - operando1;
-  
+  sub  <= ('0' & operando0 ) - operando1; 
+                                          -- o mulu vai ser literal mulu <= ('0' & operando0) * operando1 ???
   Carry <= soma(16) when op_Select = "00" else
             sub(16) when op_Select = "01" else
             '0';
