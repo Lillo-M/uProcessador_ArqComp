@@ -23,8 +23,6 @@ architecture a_ULA_tb of ULA_tb is
   signal op_select : unsigned(1 downto 0) := "00";
 begin
   
-  operando_A <= "0000000000000100";
-  operando_B <= "0000000000000100";
 
   uut : ULA
    port map(
@@ -38,13 +36,25 @@ begin
   
   process
   begin
+    operando_A <= "0000000000000100";
+    operando_B <= "0000000000000100";
     op_Select (1 downto 0) <= "00";
     wait for 50 ns;
+    operando_A <= "0000000000000100";
+    operando_B <= "0000000000000100";
     op_Select (1 downto 0) <= "01";
     wait for 50 ns;
-    op_Select (1 downto 0) <= "10";
+    operando_A <= "1111111111111111";
+    operando_B <= "0000000000000001";
+    op_Select (1 downto 0) <= "00";
     wait for 50 ns;
-    op_Select (1 downto 0) <= "11";
+    operando_A <= "0000000000000010";
+    operando_B <= "0000000000000101";
+    op_Select (1 downto 0) <= "01";
+    wait for 50 ns;
+    operando_A <= "0000000000000101";
+    operando_B <= "0000000000000010";
+    op_Select (1 downto 0) <= "01";
     wait for 50 ns;
     wait;
   end process;
