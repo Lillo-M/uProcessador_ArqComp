@@ -21,28 +21,28 @@ architecture a_ULA of ULA is
                 entr1 : in  unsigned(16 downto 0);
                 entr2 : in  unsigned(16 downto 0);
                 entr3 : in  unsigned(16 downto 0);
-                sel   : in  unsigned(1 downto 0); -- bits de seleção num só bus
+                sel   : in  unsigned( 1 downto 0); -- bits de seleção num só bus
                 saida : out unsigned(16 downto 0)  -- lembre: sem ';' aqui
             );
   end component;
-  signal soma, sub, mux_output: unsigned(16 downto 0) := "00000000000000000";
-  -- signal xor_s, mulu: unsigned(16 downto 0);
+  signal soma, sub, mux_output,
+  xor_s: unsigned(16 downto 0) := "00000000000000000";
+  signal mulu: unsigned(31 downto 0) := "00000000000000000000000000000000";
 begin
   saida <= mux_output(15 downto 0);
-
-
-  soma <= ('0' & operando0 ) + operando1;
-  sub  <= ('0' & operando0 ) - operando1;
- 
+  soma  <= ('0' & operando0) + operando1;
+  sub   <= ('0' & operando0) - operando1;
+  xor_s <=  '0' & (operando0 xor operando1);
+  mulu  <= operando0 * operando1;
   Carry <= mux_output(16);
   zero  <= '1' when mux_output (15 downto 0) = "0000000000000000" else '0';
   
   muxSaida: mux17bits4x1
    port map(
       entr0 (16 downto 0) => soma (16 downto 0),
-      entr1 (16 downto 0) => sub (16 downto 0),
-      entr2 (16 downto 0) => "00000000000000000",
-      entr3 (16 downto 0) => "00000000000000000",
+      entr1 (16 downto 0) => sub  (16 downto 0),
+      entr2 (16 downto 0) => mulu (16 downto 0),
+      entr3 (16 downto 0) => xor_s,
       sel => op_Select,
       saida (16 downto 0) => mux_output (16 downto 0)
   ); 
