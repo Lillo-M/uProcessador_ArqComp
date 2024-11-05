@@ -7,9 +7,9 @@ entity ULA is
     op_Select       : in  unsigned(1 downto 0);
     operando0       : in  unsigned(15 downto 0);
     operando1       : in  unsigned(15 downto 0);
-    saida           : out unsigned(15 downto 0);
-    Zero            : out std_logic;
-    Carry           : out std_logic
+    saida           : out unsigned(15 downto 0) := x"0000";
+    Zero            : out std_logic := '0';
+    Carry           : out std_logic := '0'
 
   );
 end entity ULA;
@@ -25,25 +25,25 @@ architecture a_ULA of ULA is
                 saida : out unsigned(16 downto 0)  -- lembre: sem ';' aqui
             );
   end component;
-  signal soma, sub, mux_output,
-  xor_s: unsigned(16 downto 0) := "00000000000000000";
-  signal mulu: unsigned(31 downto 0) := "00000000000000000000000000000000";
+  signal soma, sub_s, 
+  mux_output, xor_s: unsigned(16 downto 0) := x"0000" & '0';
+  signal mulu: unsigned(31 downto 0) := x"00000000";
 begin
   saida <= mux_output(15 downto 0);
   soma  <= ('0' & operando0) + operando1;
-  sub   <= ('0' & operando0) - operando1;
+  sub_s   <= ('0' & operando0) - ('1' & operando1);
   xor_s <=  '0' & (operando0 xor operando1);
   mulu  <= operando0 * operando1;
   Carry <= mux_output(16);
-  zero  <= '1' when mux_output (15 downto 0) = "0000000000000000" else '0';
+  Zero  <= '1' when mux_output (15 downto 0) = x"0000" else '0';
   
   muxSaida: mux17bits4x1
    port map(
       entr0 (16 downto 0) => soma (16 downto 0),
-      entr1 (16 downto 0) => sub  (16 downto 0),
+      entr1 (16 downto 0) => sub_s  (16 downto 0),
       entr2 (16 downto 0) => mulu (16 downto 0),
       entr3 (16 downto 0) => xor_s,
-      sel => op_Select,
+      sel (1 downto 0) => op_Select (1 downto 0),
       saida (16 downto 0) => mux_output (16 downto 0)
   ); 
   

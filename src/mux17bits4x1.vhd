@@ -18,5 +18,5 @@ begin
                entr1 when sel="01" else
                entr2 when sel="10" else
                entr3 when sel="11" else
-               "00000000000000000";              -- saida tem 16 bits, portanto 16 zeros
+               x"0000" & '0';              -- saida tem 17 bits, portanto 17 zeros
 end architecture a_mux17bits4x1;
