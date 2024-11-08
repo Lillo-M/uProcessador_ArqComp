@@ -3,9 +3,9 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity mux8x1 is
-   port( sel0,sel1,sel2          : in std_logic;
-         entr                    : in std_logic_vector (7 downto 0);
-         saida                   : out std_logic
+   port( sel0,sel1,sel2          : in std_logic := '0';
+         entr                    : in std_logic_vector (7 downto 0) := x"00";
+         saida                   : out std_logic := '0'
    );
 end entity;
 

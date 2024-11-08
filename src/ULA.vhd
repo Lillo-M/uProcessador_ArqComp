@@ -4,9 +4,9 @@ use IEEE.numeric_std.all;
 
 entity ULA is
   port (
-    op_Select       : in  unsigned(1 downto 0);
-    operando0       : in  unsigned(15 downto 0);
-    operando1       : in  unsigned(15 downto 0);
+    op_Select       : in  unsigned(1 downto 0) := "00";
+    operando0       : in  unsigned(15 downto 0) := x"0000";
+    operando1       : in  unsigned(15 downto 0) := x"0000";
     saida           : out unsigned(15 downto 0) := x"0000";
     Zero            : out std_logic := '0';
     Carry           : out std_logic := '0'
