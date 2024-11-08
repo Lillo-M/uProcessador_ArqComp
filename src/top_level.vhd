@@ -67,7 +67,7 @@ begin
                x"0000";
   
   operand_B <=  reg_data when ALU_Src_B = "00" else
-                 x"0004" when ALU_Src_B = "01" else
+                 x"0001" when ALU_Src_B = "01" else
              imm_gen_out when ALU_Src_B = "10" else
                x"0000";
 
