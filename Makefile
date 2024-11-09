@@ -2,7 +2,7 @@
 FILES = src/*
 
 # testbench
-TESTBENCH = rom_PC
+TESTBENCH = top_level
 TESTBENCHPATH = tb/${TESTBENCHFILE}*
 TESTBENCHFILE = ${TESTBENCH}_tb
 WORKDIR = work

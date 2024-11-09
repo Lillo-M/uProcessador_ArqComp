@@ -9,15 +9,12 @@ end entity top_level_tb;
 architecture a_top_level_tb of top_level_tb is
   component top_level
     port(
-      ALU_Op                       : in UNSIGNED (01 downto 0);
-      reg_sel, reg_write           : in UNSIGNED (02 downto 0);
-      wr_data_sel                  : in UNSIGNED (01 downto 0);
-      ALU_Src_A, ALU_Src_B         : in UNSIGNED (01 downto 0);
-      imm_gen_out, Inst_Pointer    : in UNSIGNED (15 downto 0);
-      reset                        : in std_logic;
-      clk                          : in std_logic;
-      wr_en                        : in  std_logic;
-      Zero, Carry                  : out std_logic
+    ALU_Op                       : in UNSIGNED (01 downto 0);
+    reg_sel, reg_write           : in UNSIGNED (02 downto 0);
+    clk                          : in  std_logic;
+    reset                        : in  std_logic;
+    wr_en                        : in  std_logic;
+    Zero, Carry                  : out std_logic
     );
   end component;
   signal ALU_Op                       :  UNSIGNED (01 downto 0) :=  "00";
@@ -35,11 +32,6 @@ begin
       ALU_Op => ALU_Op,
       reg_sel => reg_sel,
       reg_write => reg_write,
-      wr_data_sel => wr_data_sel,
-      ALU_Src_A => ALU_Src_A,
-      ALU_Src_B => ALU_Src_B,
-      imm_gen_out => imm_gen_out,
-      Inst_Pointer => Inst_Pointer,
       Zero => Zero,
       reset => reset,
       wr_en => wr_en,
@@ -68,62 +60,7 @@ begin
   
   tb: process
   begin 
-    reg_sel   <="111";
-    ALU_Src_A <= "01";
-    ALU_Src_B <= "00";
     wait for 2*period_time;
-    reg_write <=  "000";
-    wr_data_sel <= "10";
-    imm_gen_out <= x"0010";
-    wr_en     <=  '1';
-    wait for 100 ns;
-    reg_write <=  "001";
-    wr_data_sel <= "10";
-    imm_gen_out <= x"0100";
-    wr_en     <=  '1';
-    wait for 100 ns;
-    reg_write <=  "010";
-    imm_gen_out   <= x"0110";
-    wr_data_sel <= "10";
-    wr_en     <=  '1';
-    wait for 100 ns;
-    reg_write <=  "011";
-    imm_gen_out   <= x"1000";
-    wr_data_sel <= "10";
-    wr_en     <=  '1';
-    wait for 100 ns;
-    reg_write <=  "100";
-    imm_gen_out   <= x"1010";
-    wr_data_sel <= "10";
-    wr_en     <=  '1';
-    wait for 100 ns;
-    reg_sel   <=  "000";
-    reg_write <=  "000";
-    wr_en     <=  '0';
-    imm_gen_out   <= x"0000";
-    wr_data_sel <= "10";
-    wait for 100 ns;
-    wr_data_sel <= "00";
-    reg_sel   <=  "001";
-    wait for 100 ns;
-    reg_sel   <=  "010";
-    wait for 100 ns;
-    reg_sel   <=  "011";
-    wait for 100 ns;
-    reg_sel   <=  "100";
-    wait for 100 ns;
-    reg_sel   <=  "111";
-    wr_en <= '1';
-    reg_write <= "000";
-    wait for 100 ns;
-    wr_en <= '0';
-    ALU_Src_B <= "00";
-    ALU_Op <= "01";
-    reg_sel <= "000";
-    wait for 100 ns;
-    ALU_Src_A <= "00";
-    ALU_Src_B <= "01";
-    ALU_Op <= "00";
     wait;
   end process tb;
 

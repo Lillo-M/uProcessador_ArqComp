@@ -1,0 +1,37 @@
+[*]
+[*] GTKWave Analyzer v3.3.120 (w)1999-2024 BSI
+[*] Sat Nov  9 21:42:47 2024
+[*]
+[dumpfile] "/home/lillo/Documents/mprocessador/work/top_level_tb.vcd"
+[dumpfile_mtime] "Sat Nov  9 21:41:38 2024"
+[dumpfile_size] 26635
+[savefile] "/home/lillo/Documents/mprocessador/save.gtkw"
+[timestart] 0
+[size] 1920 1080
+[pos] -968 -36
+*-28.040367 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top_level_tb.
+[treeopen] top_level_tb.uut.
+[sst_width] 323
+[signals_width] 142
+[sst_expanded] 1
+[sst_vpaned_height] 346
+@28
+top_level_tb.uut.cu.clk
+top_level_tb.uut.cu.estado
+@22
+top_level_tb.uut.cu.instr[16:0]
+@28
+top_level_tb.uut.cu.jump_en
+@22
+top_level_tb.uut.cu.opcode[3:0]
+@28
+top_level_tb.uut.cu.pc_write
+top_level_tb.uut.cu.reset
+@22
+top_level_tb.uut.pc.data_in[15:0]
+top_level_tb.uut.pc.data_out[15:0]
+@29
+top_level_tb.uut.pc.wr_en
+[pattern_trace] 1
+[pattern_trace] 0

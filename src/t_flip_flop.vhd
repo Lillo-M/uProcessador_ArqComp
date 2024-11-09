@@ -4,10 +4,10 @@ use IEEE.numeric_std.all;
 
 entity t_flip_flop is
   port (
-    T        : in std_logic; 
-    clk      : in std_logic;
-    reset    : in std_logic;
-    Q        : out std_logic
+    T        : in std_logic := '0'; 
+    clk      : in std_logic := '0';
+    reset    : in std_logic := '0';
+    Q        : out std_logic := '0'
   );
 end entity t_flip_flop;
 

@@ -3,12 +3,12 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity mux17bits4x1 is
-        port(   entr0 : in  unsigned(16 downto 0);
-                entr1 : in  unsigned(16 downto 0);
-                entr2 : in  unsigned(16 downto 0);
-                entr3 : in  unsigned(16 downto 0);
-                sel   : in  unsigned(1 downto 0); -- bits de seleção num só bus
-                saida : out unsigned(16 downto 0)  -- lembre: sem ';' aqui
+        port(   entr0 : in  unsigned(16 downto 0) := x"0000" & '0';
+                entr1 : in  unsigned(16 downto 0) := x"0000" & '0';
+                entr2 : in  unsigned(16 downto 0) := x"0000" & '0';
+                entr3 : in  unsigned(16 downto 0) := x"0000" & '0';
+                sel   : in  unsigned(1 downto 0) := "00"; -- bits de seleção num só bus
+                saida : out unsigned(16 downto 0) := x"0000" & '0'  -- lembre: sem ';' aqui
             );
 end entity mux17bits4x1;
 
