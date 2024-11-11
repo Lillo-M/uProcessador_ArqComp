@@ -31,7 +31,7 @@ architecture a_ULA of ULA is
 begin
   saida <= mux_output(15 downto 0);
   soma  <= ('0' & operando0) + operando1;
-  sub_s   <= ('0' & operando0) - ('1' & operando1);
+  sub_s <= ('0' & operando0) - ('1' & operando1);
   xor_s <=  '0' & (operando0 xor operando1);
   mulu  <= operando0 * operando1;
   Carry <= mux_output(16);

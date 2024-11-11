@@ -1,0 +1,76 @@
+R --  opcode
+I --  opcode
+B --  opcode
+
+
+
+
+ADD A, rX
+opcode -> soma
+número do registrador
+funct -> soma
+
+LD rX, const
+opcode -> soma
+número do registrador
+funct -> soma
+
+
+SUB A, rX
+opcode -> soma
+número do registrador
+funct -> sub
+
+SUBI A, const
+opcode -> imediato
+constante n Bits
+funct -> sub
+
+opcional:
+  ADDI A, const
+  opcode -> imediato
+  constante n Bits
+  funct -> soma
+
+MOV rX, A
+opcode -> MOV
+número do registrador
+funct -> Acumulador para Reg.
+
+MOV A, rX
+opcode -> MOV
+número do registrador
+funct -> Reg. para Acumulador
+
+SUBB??
+
+CMPR A, rY
+opcode -> CMP
+número do registrador
+funct -> ?
+
+
+CMPI A, const
+opcode -> imediato
+constante n Bits
+funct -> CMP
+
+JUMP endereço
+opcode -> jump
+constante n Bits -> endereço
+
+
+
+BEQ const
+
+BHS const
+
+Uma subtração com _Borrow_ ocorre na operação $a − b$ quando b é maior 
+que a, tratando-os como números sem sinal.
+O hardware do computador pode detectar um empréstimo 
+na subtração verificando se ocorreu um "carry" na adição
+correspondente. Se não houver carry na adição,
+então há um _Borrow_ na subtração.
+Se houver carry na adição, então não há empréstimo na subtração.
+
+SUBB = a + not(b) + Cf, sendo Cf a Carry Flag.

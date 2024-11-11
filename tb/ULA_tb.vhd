@@ -41,17 +41,29 @@ begin
     operando_B <= x"F00A";
     op_Select (1 downto 0) <= "00"; -- soma
     wait for 50 ns;
-    operando_A <= x"0FFF"; -- a - b, onde a > b
-    operando_B <= x"0AAA";
+    operando_A <= x"000F"; -- a - b, onde a > b
+    operando_B <= x"000A";
     op_Select (1 downto 0) <= "01"; -- sub
     wait for 50 ns;
-    operando_A <= x"0FFF"; -- a - b, onde a = b
-    operando_B <= x"0FFF";
+    operando_A <= x"000F"; -- a - b, onde a = b
+    operando_B <= x"000F";
     op_Select (1 downto 0) <= "01"; -- sub
     wait for 50 ns;
-    operando_A <=  x"00A7"; -- a - b, onde a < b
-    operando_B <=  x"00D3";
+    operando_A <=  x"0003"; -- a - b, onde a < b
+    operando_B <=  x"0007";
     op_Select (1 downto 0) <= "01"; -- sub
+    wait for 50 ns;
+    operando_A <= x"000F"; -- a - b, onde a > b
+    operando_B <= x"FFF6";
+    op_Select (1 downto 0) <= "00"; -- sub
+    wait for 50 ns;
+    operando_A <= x"000F"; -- a - b, onde a = b
+    operando_B <= x"FFF1";
+    op_Select (1 downto 0) <= "00"; -- sub
+    wait for 50 ns;
+    operando_A <=  x"0003"; -- a - b, onde a < b
+    operando_B <=  x"FFF9";
+    op_Select (1 downto 0) <= "00"; -- sub
     wait for 50 ns;
     operando_A <= x"0007";
     operando_B <= x"0007";

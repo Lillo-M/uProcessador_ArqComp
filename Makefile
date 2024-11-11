@@ -2,7 +2,7 @@
 FILES = src/*
 
 # testbench
-TESTBENCH = top_level
+TESTBENCH = ULA
 TESTBENCHPATH = tb/${TESTBENCHFILE}*
 TESTBENCHFILE = ${TESTBENCH}_tb
 WORKDIR = work
