@@ -83,7 +83,7 @@ architecture a_top_level of top_level is
   signal rom_o : unsigned (16 downto 0) := x"0000" & '0';
   signal reg_data, wr_data, ULA_out,
   acumulador_out, PC_i, PC_o          : UNSIGNED (15 downto 0) := x"0000";
-  signal PC_Write, PC_wr_en, estado, jump_en: std_logic := '0';
+  signal PC_Write, PC_wr_en, jump_en: std_logic := '0';
   signal ALU_Src_A, ALU_Src_B, reg_wr_data_sel :  UNSIGNED (01 downto 0) :=  "00";
 begin 
 

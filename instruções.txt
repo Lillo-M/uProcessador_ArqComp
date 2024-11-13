@@ -1,6 +1,6 @@
-R --  opcode
-I --  opcode
-B --  opcode
+R --  funct register0 register1 opcode
+I --  const register opcode
+B --  const opcode
 
 
 
@@ -74,3 +74,25 @@ então há um _Borrow_ na subtração.
 Se houver carry na adição, então não há empréstimo na subtração.
 
 SUBB = a + not(b) + Cf, sendo Cf a Carry Flag.
+
+
+
+Lab5
+R --  funct register0 register1 opcode ?
+I --  const register0 register1 opcode ?
+B --  const opcode ?
+
+LD Rx, const
+
+ADD A, Rx
+
+MOVE A, Rx (mover o conteudo de A para Rx)
+
+MOVE Rx, A -> (mover o conteudo de Rx para A)
+
+MOVE Rx, Ry -> (mover o conteudo de Rx para Ry) ???
+-- O processador deveria ser capaz de mover valor entre
+-- registradores ou apenas entre registradores e acumulador?
+
+JUMP const -> (ja tá implementada mas é meio capenga)
+
