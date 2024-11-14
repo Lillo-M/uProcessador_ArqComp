@@ -10,6 +10,7 @@ entity top_level is
     ALU_Src_A, ALU_Src_B         : in UNSIGNED (01 downto 0) :=  "00";
     imm_gen_out, Inst_Pointer    : in UNSIGNED (15 downto 0) := x"0000";
     clk                          : in  std_logic := '0';
+    acumulador_wr_en             : in  std_logic := '0';
     reset                        : in  std_logic := '0';
     wr_en                        : in  std_logic := '0';
     Zero, Carry                  : out std_logic := '0'
@@ -96,7 +97,7 @@ begin
    port map(
       data_in => ULA_out,
       data_out => acumulador_out,
-      wr_en => '1',
+      wr_en => acumulador_wr_en,
       reset => '0',
       clk => clk
   ); 
