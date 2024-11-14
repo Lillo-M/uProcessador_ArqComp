@@ -98,7 +98,7 @@ begin
       data_in => ULA_out,
       data_out => acumulador_out,
       wr_en => acumulador_wr_en,
-      reset => '0',
+      reset => reset,
       clk => clk
   ); 
 end architecture a_top_level;
