@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 entity top_level is
   port(
-        ALU_Op                       : in UNSIGNED (01 downto 0) :=  "00";
+  ALU_Op                       : in UNSIGNED (01 downto 0) :=  "00";
   reg_sel, reg_write           : in UNSIGNED (02 downto 0) :=  "000";
   clk                          : in  std_logic := '0';
   reset                        : in  std_logic := '0';
@@ -18,7 +18,7 @@ architecture a_top_level of top_level is
   component rom
     port( 
           clk      : in std_logic;
-          endereco : in unsigned(15 downto 0);
+          endereco : in unsigned (06 downto 0);
           dado     : out unsigned(16 downto 0) 
         );
   end component;
@@ -83,7 +83,7 @@ architecture a_top_level of top_level is
   signal rom_o : unsigned (16 downto 0) := x"0000" & '0';
   signal reg_data, wr_data, ULA_out,
   acumulador_out, PC_i, PC_o          : UNSIGNED (15 downto 0) := x"0000";
-  signal PC_Write, PC_wr_en, estado, jump_en: std_logic := '0';
+  signal PC_Write, PC_wr_en, jump_en: std_logic := '0';
   signal ALU_Src_A, ALU_Src_B, reg_wr_data_sel :  UNSIGNED (01 downto 0) :=  "00";
 begin 
 
@@ -159,7 +159,7 @@ begin
   program_mem: rom
    port map(
       clk => clk,
-      endereco => PC_o,
+      endereco (6 downto 0) => PC_o (6 downto 0),
       dado => rom_o
   );
 

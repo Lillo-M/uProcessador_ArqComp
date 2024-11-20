@@ -9,7 +9,7 @@ end entity rom_tb;
 architecture a_rom_tb of rom_tb is
   component rom
    port( clk      : in std_logic;
-         endereco : in unsigned(15 downto 0);
+         endereco : in unsigned (06 downto 0);
          dado     : out unsigned(16 downto 0) 
    );
   end component;
@@ -22,7 +22,7 @@ begin
   tb_rom: rom
    port map(
       clk => clk,
-      endereco => endereco,
+      endereco (6 downto 0) => endereco (6 downto 0),
       dado => dado
   );
 
