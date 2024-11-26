@@ -78,21 +78,42 @@ SUBB = a + not(b) + Cf, sendo Cf a Carry Flag.
 
 
 Lab5
-R --  funct register0 register1 opcode ?
-I --  const register0 register1 opcode ?
-B --  const opcode ?
+R --  funct register0 opcode
+I --  const opcode
+B --  const opcode
+J --  const opcode
 
-LD Rx, const
+LD A, const
+opcode = 0001
 
 ADD A, Rx
+opcode = 0010
+
+SUBI A, const
+opcode = 0011
+
+SUBB A, const
+opcode = 0100
+
+CMPR A, Rx
+opcode = 0101
+
+CMPI A, const
+opcode = 0110
 
 MOVE A, Rx (mover o conteudo de A para Rx)
+opcode = 0111
 
 MOVE Rx, A -> (mover o conteudo de Rx para A)
-
-MOVE Rx, Ry -> (mover o conteudo de Rx para Ry) ???
--- O processador deveria ser capaz de mover valor entre
--- registradores ou apenas entre registradores e acumulador?
+opcode = 1000
 
 JUMP const -> (ja tá implementada mas é meio capenga)
+opcode = 1111
 
+B J I 
+| const 16 downto 4 | opcode 3 downto 0 |
+  0 0000 0000 0000          0000
+
+R
+| rs1 ..3 bits.. | opcode  3 downto 0|
+      000                 0000
