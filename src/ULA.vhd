@@ -17,12 +17,12 @@ end entity ULA;
 
 architecture a_ULA of ULA is
   component mux17bits4x1
-        port(   entr0 : in  unsigned(16 downto 0);
-                entr1 : in  unsigned(16 downto 0);
-                entr2 : in  unsigned(16 downto 0);
-                entr3 : in  unsigned(16 downto 0);
-                sel   : in  unsigned( 1 downto 0); -- bits de seleção num só bus
-                saida : out unsigned(16 downto 0)  -- lembre: sem ';' aqui
+        port(   entr0 : in  unsigned(16 downto 0) := '0' & x"0000";
+                entr1 : in  unsigned(16 downto 0) := '0' & x"0000";
+                entr2 : in  unsigned(16 downto 0) := '0' & x"0000";
+                entr3 : in  unsigned(16 downto 0) := '0' & x"0000";
+                sel   : in  unsigned( 1 downto 0) := "00";
+                saida : out unsigned(16 downto 0) := '0' & x"0000"
             );
   end component;
   signal soma, sub_s, 

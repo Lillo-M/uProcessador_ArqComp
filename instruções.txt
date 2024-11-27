@@ -107,6 +107,13 @@ opcode = 0111
 MOVE Rx, A -> (mover o conteudo de Rx para A)
 opcode = 1000
 
+
+BHS const
+opcode = 1101
+
+BEQ const
+opcode = 1110
+
 JUMP const -> (ja tá implementada mas é meio capenga)
 opcode = 1111
 

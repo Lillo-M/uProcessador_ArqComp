@@ -4,11 +4,8 @@ use IEEE.numeric_std.all;
 
 entity top_level is
   port(
-        ALU_Op                       : in UNSIGNED (01 downto 0) :=  "00";
-  reg_sel, reg_write           : in UNSIGNED (02 downto 0) :=  "000";
   clk                          : in  std_logic := '0';
   reset                        : in  std_logic := '0';
-  wr_en                        : in  std_logic := '0';
   Zero, Carry                  : out std_logic := '0'
 );
 end entity top_level;
@@ -17,85 +14,103 @@ architecture a_top_level of top_level is
 
   component rom
     port( 
-          clk      : in std_logic;
-          endereco : in unsigned(15 downto 0);
-          dado     : out unsigned(16 downto 0) 
+          clk      : in std_logic := '0';
+          endereco : in unsigned(15 downto 0) := x"0000";
+          dado     : out unsigned(16 downto 0) := '0' & x"0000"
         );
   end component;
 
   component mux16bits4x1 is
     port(   
-          entr0 : in  unsigned(15 downto 0);
-          entr1 : in  unsigned(15 downto 0);
-          entr2 : in  unsigned(15 downto 0);
-          entr3 : in  unsigned(15 downto 0);
-          sel   : in  unsigned(1 downto 0); -- bits de seleção num só bus
-          saida : out unsigned(15 downto 0)  -- lembre: sem ';' aqui
+          entr0 : in  unsigned(15 downto 0) := x"0000";
+          entr1 : in  unsigned(15 downto 0) := x"0000";
+          entr2 : in  unsigned(15 downto 0) := x"0000";
+          entr3 : in  unsigned(15 downto 0) := x"0000";
+          sel   : in  unsigned(01 downto 0) := "00";
+          saida : out unsigned(15 downto 0) := x"0000"
         );
   end component;
 
   component registerBank
     port (
-           reg_sel   : in  UNSIGNED (02 downto 0);
-           reg_write : in  UNSIGNED (02 downto 0);
-           wr_data   : in  UNSIGNED (15 downto 0);
-           wr_en     : in  std_logic;
-           clk       : in  std_logic;
-           reset     : in  std_logic;
-           reg_data  : out UNSIGNED (15 downto 0)
+           reg_sel   : in  UNSIGNED (02 downto 0) := "000";
+           reg_write : in  UNSIGNED (02 downto 0) := "000";
+           wr_data   : in  UNSIGNED (15 downto 0) := x"0000";
+           reg_data  : out UNSIGNED (15 downto 0) := x"0000";
+           wr_en     : in  std_logic := '0';
+           clk       : in  std_logic := '0';
+           reset     : in  std_logic := '0'
          );
   end component;
 
   component ULA  
     port ( 
-           op_Select       : in  unsigned(01 downto 0);
-           operando0       : in  unsigned(15 downto 0);
-           operando1       : in  unsigned(15 downto 0);
-           saida           : out unsigned(15 downto 0);
-           Zero            : out std_logic;
-           Carry           : out std_logic
+           op_Select       : in  unsigned(01 downto 0) := "00";
+           operando0       : in  unsigned(15 downto 0) := x"0000";
+           operando1       : in  unsigned(15 downto 0) := x"0000";
+           saida           : out unsigned(15 downto 0) := x"0000";
+           Zero            : out std_logic := '0';
+           Carry           : out std_logic := '0'
          );
   end component;
 
   component register16bits  
     port (
-           data_in  : in  UNSIGNED (15 downto 0);
-           data_out : out UNSIGNED (15 downto 0);
-           wr_en    : in std_logic;
-           reset    : in std_logic;
-           clk      : in std_logic
+           data_in  : in  UNSIGNED (15 downto 0) := x"0000";
+           data_out : out UNSIGNED (15 downto 0) := x"0000";
+           wr_en    : in std_logic := '0';
+           reset    : in std_logic := '0';
+           clk      : in std_logic := '0'
          );
   end component;
 
   component UC
     port (
-      instr : in unsigned (16 downto 0);
-      clk, reset : in std_logic;
-      reg_wr_data_sel : out unsigned (1 downto 0);
-      ALU_Src_A, ALU_Src_B : out unsigned (1 downto 0);
-      PC_Write : out std_logic;
-      jump_en : out std_logic
+      instr                : in unsigned (16 downto 0) := x"0000" & '0';
+      clk, reset           : in std_logic := '0';
+      ALU_Op               : out unsigned (1 downto 0) := "00";
+      ALU_Src_A, ALU_Src_B : out unsigned (1 downto 0) := "00";
+      Acumulador_Write     : out std_logic := '0';
+      PC_Write             : out std_logic := '0';
+      IR_Write             : out std_logic := '0';
+      RegBank_Write        : out std_logic := '0';
+      Flags_Write          : out std_logic := '0';
+      PC_Source            : out std_logic := '0';
+      jump_en              : out std_logic := '0'
+    );
+  end component;
+
+  component  register17bits
+    port (
+      data_in  : in  UNSIGNED (16 downto 0) := '0' & x"0000";
+      data_out : out UNSIGNED (16 downto 0) := '0' & x"0000";
+      wr_en    : in std_logic := '0';
+      reset    : in std_logic := '0';
+      clk      : in std_logic := '0'
     );
   end component;
 
   signal memDataReg, operand_A, 
   operand_B, imm_gen_out: UNSIGNED (15 downto 0) := x"0000";
-  signal rom_o : unsigned (16 downto 0) := x"0000" & '0';
+  signal rom_o, IR_o: unsigned (16 downto 0) := x"0000" & '0';
   signal reg_data, wr_data, ULA_out,
   acumulador_out, PC_i, PC_o          : UNSIGNED (15 downto 0) := x"0000";
-  signal PC_Write, PC_wr_en, jump_en: std_logic := '0';
-  signal ALU_Src_A, ALU_Src_B, reg_wr_data_sel :  UNSIGNED (01 downto 0) :=  "00";
+  signal PC_Write, jump_en, Acumulador_Write, IR_Write, PC_Source, RegBank_Write, Flags_Write: std_logic := '0';
+  signal ALU_Src_A, ALU_Src_B, ALU_Op:  UNSIGNED (01 downto 0) :=  "00";
+  signal reg_sel:  UNSIGNED (02 downto 0) :=  "000";
+
 begin 
 
-  wr_data_MUX : mux16bits4x1
-  port map(
-            entr0 => acumulador_out,
-            entr1 => memDataReg,
-            entr2 => imm_gen_out,
-            entr3 => x"0000",
-            sel => reg_wr_data_sel,
-            saida => wr_data
-          );
+--  wr_data_MUX : mux16bits4x1
+--  port map(
+--            entr0 => acumulador_out,
+--            entr1 => memDataReg,
+--            entr2 => imm_gen_out,
+--            entr3 => x"0000",
+--            sel => reg_wr_data_sel,
+--            saida => wr_data
+--          );
+  wr_data <= acumulador_out;
 
   operand_A_MUX: mux16bits4x1
   port map(
@@ -130,9 +145,9 @@ begin
   regBank : registerBank
   port map(
             reg_sel => reg_sel,
-            reg_write => reg_write,
+            reg_write => reg_sel,
             wr_data => wr_data,
-            wr_en => wr_en,
+            wr_en => RegBank_Write,
             clk => clk,
             reset => reset,
             reg_data => reg_data
@@ -142,16 +157,25 @@ begin
   port map(
             data_in => ULA_out,
             data_out => acumulador_out,
-            wr_en => '1',
-            reset => '0',
+            wr_en => Acumulador_Write,
+            reset => reset,
             clk => clk
           ); 
+
+  Instruction_Register: register17bits
+   port map(
+      data_in => rom_o,
+      data_out => IR_o,
+      wr_en => IR_Write,
+      reset => reset,
+      clk => clk
+  );
 
   PC : register16bits
   port map(
             data_in => PC_i,
             data_out => PC_o,
-            wr_en => PC_wr_en,
+            wr_en => PC_Write,
             reset => reset,
             clk => clk
           );
@@ -165,20 +189,28 @@ begin
 
   CU : UC
    port map(
-      instr => rom_o,
+      instr => IR_o,
       clk => clk,
       reset => reset,
-      reg_wr_data_sel => reg_wr_data_sel,
+      ALU_Op => ALU_Op,
       ALU_Src_A => ALU_Src_A,
       ALU_Src_B => ALU_Src_B,
       PC_Write => PC_Write,
+      IR_Write => IR_Write,
+      RegBank_Write => RegBank_Write,
+      Flags_Write => Flags_Write,
+      PC_Source => PC_Source,
+      Acumulador_Write => Acumulador_Write,
       jump_en => jump_en
   );
 
-  PC_wr_en <= PC_Write or jump_en;
-  
-  imm_gen_out <= "000" & rom_o (16 downto 4);
+  reg_sel <= IR_o (6 downto 4);
 
-  PC_i <= ULA_out;
+  imm_gen_out <= "000" & rom_o (16 downto 4) when IR_o (3 downto 0) = "1111" else
+                 rom_o(16) & rom_o(16) & rom_o(16) & rom_o (16 downto 4);
+
+  PC_i <= (PC_o + 1) when PC_Source = '0' else 
+          imm_gen_out when jump_en = '1' else
+          x"0000";
 
 end architecture a_top_level;

@@ -9,33 +9,21 @@ end entity top_level_tb;
 architecture a_top_level_tb of top_level_tb is
   component top_level
     port(
-    ALU_Op                       : in UNSIGNED (01 downto 0);
-    reg_sel, reg_write           : in UNSIGNED (02 downto 0);
-    clk                          : in  std_logic;
-    reset                        : in  std_logic;
-    wr_en                        : in  std_logic;
-    Zero, Carry                  : out std_logic
+      clk                          : in  std_logic := '0';
+      reset                        : in  std_logic := '0';
+      Zero, Carry                  : out std_logic := '0'
     );
   end component;
-  signal ALU_Op                       :  UNSIGNED (01 downto 0) :=  "00";
-  signal reg_sel, reg_write           :  UNSIGNED (02 downto 0) :=  "000";
-  signal wr_data_sel                  :  UNSIGNED (01 downto 0) :=  "00";
-  signal ALU_Src_A, ALU_Src_B         :  UNSIGNED (01 downto 0) :=  "00";
-  signal imm_gen_out, Inst_Pointer    :  UNSIGNED (15 downto 0) := x"0000";
-  signal Zero, Carry                  :  std_logic := '0';
-  constant period_time                : time      := 100 ns;
-  signal   finished, reset, clk, wr_en: std_logic := '0';
+  signal Zero, Carry                  : std_logic := '0';
+  constant period_time                : time      := 10 ns;
+  signal   finished, reset, clk       : std_logic := '0';
 begin
   
-  uut: top_level
+  uut : top_level
    port map(
-      ALU_Op => ALU_Op,
-      reg_sel => reg_sel,
-      reg_write => reg_write,
-      Zero => Zero,
-      reset => reset,
-      wr_en => wr_en,
       clk => clk,
+      reset => reset,
+      Zero => Zero,
       Carry => Carry
   );
 
