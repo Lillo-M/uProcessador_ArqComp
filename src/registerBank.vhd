@@ -15,7 +15,12 @@ entity registerBank is
     wr_en     : in  std_logic := '0';
     clk       : in  std_logic := '0';
     reset     : in  std_logic := '0';
-    reg_data  : out UNSIGNED (15 downto 0) := x"0000"
+    reg_data  : out UNSIGNED (15 downto 0) := x"0000";
+    reg_0  : out UNSIGNED (15 downto 0) := x"0000";
+    reg_1  : out UNSIGNED (15 downto 0) := x"0000";
+    reg_2  : out UNSIGNED (15 downto 0) := x"0000";
+    reg_3  : out UNSIGNED (15 downto 0) := x"0000";
+    reg_4  : out UNSIGNED (15 downto 0) := x"0000"
   );
 end entity registerBank;
 
@@ -113,4 +118,9 @@ begin
       reset => reset,
       clk => clk
   );  
+  reg_0 <= mux_input0;
+  reg_1 <= mux_input1;
+  reg_2 <= mux_input2;
+  reg_3 <= mux_input3;
+  reg_4 <= mux_input4;
 end architecture a_registerBank;

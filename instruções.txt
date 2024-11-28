@@ -78,7 +78,7 @@ SUBB = a + not(b) + Cf, sendo Cf a Carry Flag.
 
 
 Lab5
-R --  funct register0 opcode
+R --  register opcode
 I --  const opcode
 B --  const opcode
 J --  const opcode
@@ -124,3 +124,26 @@ B J I
 R
 | rs1 ..3 bits.. | opcode  3 downto 0|
       000                 0000
+
+OBS:
+Nosso banco de registradores começa com r0 e vai até r4,
+totalizando 5 registradores.
+
+Assembly Lab5:
+      
+      ld A, 5
+      mv A, r2
+      ld A, 8
+      mv A, r3
+      mv r2, A
+      add A, r3
+      subi A, 1
+      mv A, r4
+      j, 20
+      ld 0, A
+      mv A, r4
+      mv r4, A
+      mv A, r2
+      j 4    ;Pula para instrução 'C'
+      ld 0, A
+      mv A, r2

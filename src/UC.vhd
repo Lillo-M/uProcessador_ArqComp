@@ -14,7 +14,8 @@ entity UC is
     PC_Write      : out std_logic := '0';
     IR_Write      : out std_logic := '0';
     PC_Source     : out std_logic := '0';
-    jump_en       : out std_logic := '0'
+    jump_en       : out std_logic := '0';
+    Estado_o      : out UNSIGNED (2 downto 0) := "000"
   );
 end entity UC;
 
@@ -46,6 +47,7 @@ begin
 
   ALU_Op <= "00" when (opcode = "0010" or opcode = "1000" or opcode = "0001") else
             "01" when opcode = "0011" else
+            "11" when opcode = "0100" else
             "00";
 
   Acumulador_Write <= '1' when estado = "010" and (
@@ -60,6 +62,7 @@ begin
                       '0';
 
   Flags_Write <= '1' when (estado = "010" and (opcode = "0101" or opcode = "0110")) else
+                 '1' when (estado = "011" and (opcode = "0100")) else -- isso aqui é gambiarra *para testar*
                  '0';
 
   ALU_Src_A <= "10" when opcode = "0001" else
@@ -67,6 +70,7 @@ begin
                "01";
 
   ALU_Src_B <= "11" when opcode = "0001" else
+               "10" when (opcode = "0011" or opcode = "0100") else
                "00";
   
   PC_Write <= '1' when estado = "010" else '0';
@@ -80,4 +84,5 @@ begin
   PC_Source <= '1' when (opcode = "1111" or opcode = "1101" or opcode = "1110") else
                '0';
     
+  Estado_o <= estado;
 end architecture a_UC;
