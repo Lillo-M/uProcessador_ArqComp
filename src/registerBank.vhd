@@ -52,13 +52,14 @@ architecture a_registerBank of registerBank is
   mux_input3, mux_input4, mux_input5,
   mux_input6, mux_input7 : unsigned(15 downto 0) := x"0000";
   signal sel_and_wr0, sel_and_wr1, sel_and_wr2,
-  sel_and_wr3, sel_and_wr4: std_logic := '0';
+  sel_and_wr3, sel_and_wr4, sel_and_wr5: std_logic := '0';
 begin
   sel_and_wr0 <= '1' when reg_write = "000" and wr_en = '1' else '0';
   sel_and_wr1 <= '1' when reg_write = "001" and wr_en = '1' else '0';
   sel_and_wr2 <= '1' when reg_write = "010" and wr_en = '1' else '0';
   sel_and_wr3 <= '1' when reg_write = "011" and wr_en = '1' else '0';
   sel_and_wr4 <= '1' when reg_write = "100" and wr_en = '1' else '0';
+  sel_and_wr5 <= '1' when reg_write = "101" and wr_en = '1' else '0';
 
   muxRegisters : mux16bits8x1
    port map(
@@ -118,6 +119,16 @@ begin
       reset => reset,
       clk => clk
   );  
+
+  register5 : register16bits
+   port map(
+      data_in => wr_data,
+      data_out => mux_input5,
+      wr_en => sel_and_wr5,
+      reset => reset,
+      clk => clk
+  );  
+
   reg_0 <= mux_input0;
   reg_1 <= mux_input1;
   reg_2 <= mux_input2;

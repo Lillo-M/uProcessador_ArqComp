@@ -61,12 +61,12 @@ begin
         wait;
     end process;
 
-  sim_time_proc: process
-    begin
-        wait for 10 us;         -- <== TEMPO TOTAL DA SIMULAÇÃO!!!
-        finished <= '1';
-        wait;
-    end process sim_time_proc;
+--  sim_time_proc: process
+--    begin
+--        wait for 15 us;         -- <== TEMPO TOTAL DA SIMULAÇÃO!!!
+--        finished <= '1';
+--        wait;
+--    end process sim_time_proc;
 
   clock: process
     begin                       -- gera clock até que sim_time_proc termine

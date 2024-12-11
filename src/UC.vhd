@@ -15,6 +15,8 @@ entity UC is
     IR_Write      : out std_logic := '0';
     PC_Source     : out std_logic := '0';
     jump_en       : out std_logic := '0';
+    BEQ_en        : out std_logic := '0';
+    BHS_en        : out std_logic := '0';
     Estado_o      : out UNSIGNED (2 downto 0) := "000"
   );
 end entity UC;
@@ -46,7 +48,9 @@ begin
   IR_Write <= '1' when estado = "000" else '0';
 
   ALU_Op <= "00" when (opcode = "0010" or opcode = "1000" or opcode = "0001") else
-            "01" when opcode = "0011" else
+            "01" when opcode = "0011" or
+                      opcode = "0101" or 
+                      opcode = "0110" else
             "11" when opcode = "0100" else
             "00";
 
@@ -61,8 +65,12 @@ begin
                       else
                       '0';
 
-  Flags_Write <= '1' when (estado = "010" and (opcode = "0101" or opcode = "0110")) else
-                 '1' when (estado = "011" and (opcode = "0100")) else -- isso aqui é gambiarra *para testar*
+  Flags_Write <= '1' when (estado = "010" and (
+                                               opcode = "0010" or
+                                               opcode = "0011" or
+                                               opcode = "0100" or
+                                               opcode = "0101" or 
+                                               opcode = "0110")) else
                  '0';
 
   ALU_Src_A <= "10" when opcode = "0001" else
@@ -80,6 +88,10 @@ begin
   RegBank_Write <= '1' when opcode = "0111" and estado = "010" else '0';
 
   jump_en <= '1' when opcode = "1111" else '0';
+
+  BHS_En <= '1' when opcode = "1101" else '0';
+
+  BEQ_En <= '1' when opcode = "1110" else '0';
 
   PC_Source <= '1' when (opcode = "1111" or opcode = "1101" or opcode = "1110") else
                '0';

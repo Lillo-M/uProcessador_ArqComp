@@ -1,37 +1,37 @@
 [*]
 [*] GTKWave Analyzer v3.3.120 (w)1999-2024 BSI
-[*] Thu Nov 28 00:51:22 2024
+[*] Sat Dec  7 23:47:09 2024
 [*]
-[dumpfile] "/home/lillo/Documents/mprocessador/work/top_level_tb.vcd"
-[dumpfile_mtime] "Thu Nov 28 00:38:59 2024"
-[dumpfile_size] 268126
+[dumpfile] "/home/lillo/Documents/mprocessador/work/processador_tb.vcd"
+[dumpfile_mtime] "Sat Dec  7 23:46:46 2024"
+[dumpfile_size] 494380
 [savefile] "/home/lillo/Documents/mprocessador/save.gtkw"
 [timestart] 0
 [size] 1920 1080
-[pos] -650 -36
-*-27.221251 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[treeopen] top_level_tb.
-[treeopen] top_level_tb.uut.
-[treeopen] top_level_tb.uut.regbank.
+[pos] -968 -36
+*-31.021748 595000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] processador_tb.
+[treeopen] processador_tb.uut.
 [sst_width] 323
 [signals_width] 190
 [sst_expanded] 1
 [sst_vpaned_height] 346
+@22
+processador_tb.uut.regbank.mux_input0[15:0]
+processador_tb.uut.regbank.mux_input1[15:0]
+processador_tb.uut.regbank.mux_input2[15:0]
+processador_tb.uut.regbank.mux_input3[15:0]
+processador_tb.uut.regbank.mux_input4[15:0]
+@25
+processador_tb.uut.regbank.mux_input5[15:0]
+@22
+processador_tb.uut.pc_out[15:0]
+processador_tb.uut.ir_o[16:0]
+processador_tb.uut.acumulador_out[15:0]
 @28
-top_level_tb.clk
-top_level_tb.reset
-top_level_tb.uut.cu.estado[2:0]
-@22
-top_level_tb.uut.ir_o[16:0]
-@24
-top_level_tb.uut.pc_o[15:0]
-@22
-top_level_tb.uut.ula_out[15:0]
-top_level_tb.uut.acumulador_out[15:0]
-top_level_tb.uut.regbank.muxregisters.entr0[15:0]
-top_level_tb.uut.regbank.muxregisters.entr1[15:0]
-top_level_tb.uut.regbank.muxregisters.entr2[15:0]
-top_level_tb.uut.regbank.muxregisters.entr3[15:0]
-top_level_tb.uut.regbank.muxregisters.entr4[15:0]
+processador_tb.uut.clk
+processador_tb.uut.estado_out[2:0]
+processador_tb.uut.carryff_o
+processador_tb.uut.flags_write
 [pattern_trace] 1
 [pattern_trace] 0
