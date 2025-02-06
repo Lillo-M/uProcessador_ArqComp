@@ -107,6 +107,14 @@ opcode = 0111
 MOVE Rx, A -> (mover o conteudo de Rx para A)
 opcode = 1000
 
+LW A, (Rx) -> (carregar o conteudo do endereço apontado por Rx em A)
+opcode = 1001
+
+SW A, (Rx) -> (carregar o conteudo de A para o endereço apontado por Rx)
+opcode = 1010
+
+BLT const
+opcode = 1100
 
 BHS const
 opcode = 1101

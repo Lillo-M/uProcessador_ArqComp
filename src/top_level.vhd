@@ -21,6 +21,16 @@ end entity top_level;
 
 architecture a_top_level of top_level is 
 
+  component ram
+   port( 
+         clk      : in std_logic := '0';
+         endereco : in unsigned(6 downto 0) := x"0" & "000";
+         wr_en    : in std_logic := '0';
+         dado_in  : in unsigned(15 downto 0) := x"0000";
+         dado_out : out unsigned(15 downto 0) := x"0000"
+   );
+  end component;
+
   component rom
     port( 
            clk      : in std_logic := '0';
@@ -82,20 +92,23 @@ architecture a_top_level of top_level is
 
   component UC
     port (
-           instr                 : in unsigned (16 downto 0) := x"0000" & '0';
-           clk, reset            : in std_logic := '0';
-           ALU_Op                : out unsigned (1 downto 0) := "00";
-           ALU_Src_A, ALU_Src_B  : out unsigned (1 downto 0) := "00";
-           Acumulador_Write      : out std_logic := '0';
-           PC_Write              : out std_logic := '0';
-           IR_Write              : out std_logic := '0';
-           RegBank_Write         : out std_logic := '0';
-           Flags_Write           : out std_logic := '0';
-           PC_Source             : out std_logic := '0';
-           jump_en               : out std_logic := '0';
-           BEQ_en                : out std_logic := '0';
-           BHS_en                : out std_logic := '0';
-           Estado_o              : out UNSIGNED (2 downto 0)
+    instr                : in unsigned (16 downto 0) := x"0000" & '0';
+    clk, reset           : in std_logic := '0';
+    ALU_Op               : out unsigned (1 downto 0) := "00";
+    ALU_Src_A, ALU_Src_B : out unsigned (1 downto 0) := "00";
+    Acumulador_Write     : out std_logic := '0';
+    Flags_Write   : out std_logic := '0';
+    RegBank_Write : out std_logic := '0';
+    PC_Write      : out std_logic := '0';
+    IR_Write      : out std_logic := '0';
+    ram_Write     : out std_logic := '0';
+    acumulador_Src: out std_logic := '0';
+    PC_Source     : out std_logic := '0';
+    jump_en       : out std_logic := '0';
+    BEQ_en        : out std_logic := '0';
+    BHS_en        : out std_logic := '0';
+    BLO_en        : out std_logic := '0';
+    Estado_o      : out UNSIGNED (2 downto 0) := "000"
   );
   end component;
 
@@ -119,27 +132,18 @@ architecture a_top_level of top_level is
   end component;
 
   signal operand_A, 
-  operand_B, imm_gen_out: UNSIGNED (15 downto 0) := x"0000";
+  operand_B, imm_gen_out, ula_or_mem_mux: UNSIGNED (15 downto 0) := x"0000";
   signal rom_o, IR_o: unsigned (16 downto 0) := x"0000" & '0';
   signal reg_data, wr_data, ULA_out,
-  acumulador_out, PC_i, PC_o          : UNSIGNED (15 downto 0) := x"0000";
+  acumulador_out, PC_i, PC_o, ram_o, ram_i, ram_reg_o: UNSIGNED (15 downto 0) := x"0000";
   signal PC_Write, jump_en, Acumulador_Write, IR_Write,
   PC_Source, RegBank_Write, Flags_Write, ZeroFF_o, Zero, CarryFF_o, Carry,
-  BHS_en, BEQ_en : std_logic := '0';
+  BHS_en, BEQ_en, ram_wr_en, mem_wr_back, BLO_en: std_logic := '0';
   signal ALU_Src_A, ALU_Src_B, ALU_Op:  UNSIGNED (01 downto 0) :=  "00";
   signal reg_sel:  UNSIGNED (02 downto 0) :=  "000";
 
 begin 
-
-  --  wr_data_MUX : mux16bits4x1
-  --  port map(
-  --            entr0 => acumulador_out,
-  --            entr1 => memDataReg,
-  --            entr2 => imm_gen_out,
-  --            entr3 => x"0000",
-  --            sel => reg_wr_data_sel,
-  --            saida => wr_data
-  --          );
+  
   wr_data <= acumulador_out;
 
   operand_A_MUX: mux16bits4x1
@@ -189,9 +193,21 @@ begin
             reg_4 => reg_4
           );
 
+  -- mux para o acumular MEM or ULA
+  ula_or_mem_mux <= ram_o when mem_wr_back = '1' else ULA_out;
+
+  ram_Register : register16bits
+  port map(
+            data_in => ram_o,
+            data_out => ram_reg_o,
+            wr_en => '1',
+            reset => reset,
+            clk => clk
+          );
+
   acumulador : register16bits
   port map(
-            data_in => ULA_out,
+            data_in => ula_or_mem_mux,
             data_out => acumulador_out,
             wr_en => Acumulador_Write,
             reset => reset,
@@ -233,6 +249,8 @@ begin
             ALU_Src_B => ALU_Src_B,
             PC_Write => PC_Write,
             IR_Write => IR_Write,
+            ram_Write => ram_wr_en,
+            acumulador_Src => mem_wr_back,
             RegBank_Write => RegBank_Write,
             Flags_Write => Flags_Write,
             PC_Source => PC_Source,
@@ -240,6 +258,7 @@ begin
             jump_en => jump_en,
             BHS_en => BHS_en,
             BEQ_en => BEQ_en,
+            BLO_en => BLO_en,
             Estado_o => Estado_Out
           );
 
@@ -259,6 +278,18 @@ begin
             Q => CarryFF_o
           );
 
+  -- por enquanto: sujeito a mudança
+  ram_i <= acumulador_out;
+  
+  ram_inst: ram
+   port map(
+      clk => clk,
+      endereco => reg_data (6 downto 0),
+      wr_en => ram_wr_en,
+      dado_in => ram_i,
+      dado_out => ram_o
+  );
+
   reg_sel <= IR_o (6 downto 4);
 
   imm_gen_out <= "000" & rom_o (16 downto 4) when IR_o (3 downto 0) = "1111" else
@@ -266,7 +297,10 @@ begin
   -- rom(16) é o MSB do imediato.
 
   PC_i <= imm_gen_out when jump_en = '1' else
-          (PC_o + imm_gen_out) when ((BHS_en = '1' and CarryFF_o = '1') or (BEQ_en = '1' and ZeroFF_o = '1')) else
+          (PC_o + imm_gen_out) when 
+          ((BHS_en = '1' and CarryFF_o = '1') or 
+          (BEQ_en = '1' and ZeroFF_o = '1') or 
+          (BLO_en = '1' and CarryFF_o = '0')) else
           (PC_o + 1);
 
   PC_Out <= PC_o;

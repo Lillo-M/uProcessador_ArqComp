@@ -13,10 +13,13 @@ entity UC is
     RegBank_Write : out std_logic := '0';
     PC_Write      : out std_logic := '0';
     IR_Write      : out std_logic := '0';
+    ram_Write     : out std_logic := '0';
+    acumulador_Src: out std_logic := '0';
     PC_Source     : out std_logic := '0';
     jump_en       : out std_logic := '0';
     BEQ_en        : out std_logic := '0';
     BHS_en        : out std_logic := '0';
+    BLO_en        : out std_logic := '0';
     Estado_o      : out UNSIGNED (2 downto 0) := "000"
   );
 end entity UC;
@@ -54,14 +57,14 @@ begin
             "11" when opcode = "0100" else
             "00";
 
-  Acumulador_Write <= '1' when estado = "010" and (
+  Acumulador_Write <= '1' when (estado = "010" and (
                       opcode = "0001" or
                       opcode = "0010" or
                       opcode = "0011" or
                       opcode = "0100" or
                       opcode = "0101" or
-                      opcode = "0110" or 
-                      opcode = "1000") 
+                      opcode = "1000")) or
+                      (estado = "011" and opcode = "1001")
                       else
                       '0';
 
@@ -78,7 +81,7 @@ begin
                "01";
 
   ALU_Src_B <= "11" when opcode = "0001" else
-               "10" when (opcode = "0011" or opcode = "0100") else
+               "10" when (opcode = "0011" or opcode = "0100" or opcode = "0110") else
                "00";
   
   PC_Write <= '1' when estado = "010" else '0';
@@ -89,12 +92,18 @@ begin
 
   jump_en <= '1' when opcode = "1111" else '0';
 
+  BLO_En <= '1' when opcode = "1100" else '0';
+  
   BHS_En <= '1' when opcode = "1101" else '0';
 
   BEQ_En <= '1' when opcode = "1110" else '0';
 
-  PC_Source <= '1' when (opcode = "1111" or opcode = "1101" or opcode = "1110") else
+  PC_Source <= '1' when (opcode = "1111" or opcode = "1100" or opcode = "1101" or opcode = "1110") else
                '0';
+
+  acumulador_Src <= '1' when (opcode = "1001") and estado = "011" else '0';
+
+  ram_Write <= '1' when (opcode = "1010") and estado = "100" else '0';
     
   Estado_o <= estado;
 end architecture a_UC;
