@@ -1,0 +1,49 @@
+v 4
+file "/home/lillo/Documents/mprocessador/" "tb/processador_tb.vhd" "daaa760db3e7f3e11b6efe63cda7561894d79ba1" "20250203055141.234":
+  entity processador_tb at 1( 0) + 0 on 41;
+  architecture a_processador_tb of processador_tb at 9( 124) + 0 on 42;
+file "/home/lillo/Documents/mprocessador/" "src/d_flip_flop.vhd" "bf0b9991079596cd92af50b6af942a73c42bb485" "20250203055141.205":
+  entity d_flip_flop at 1( 0) + 0 on 11;
+  architecture a_d_flip_flop of d_flip_flop at 14( 276) + 0 on 12;
+file "/home/lillo/Documents/mprocessador/" "src/mux16bits4x1.vhd" "4c932eff36e89c7eeac2029263255ad10dfd3991" "20250203055141.206":
+  entity mux16bits4x1 at 1( 0) + 0 on 13;
+  architecture a_mux16bits4x1 of mux16bits4x1 at 16( 576) + 0 on 14;
+file "/home/lillo/Documents/mprocessador/" "src/mux16bits8x1.vhd" "65b939cfd3fa81baeef3effc5ac85f0e2b14e1d3" "20250203055141.207":
+  entity mux16bits8x1 at 1( 0) + 0 on 15;
+  architecture a_mux16bits8x1 of mux16bits8x1 at 20( 747) + 0 on 16;
+file "/home/lillo/Documents/mprocessador/" "src/mux17bits4x1.vhd" "e01ba8ddc95244a66936dd27653a03e3ea16097f" "20250203055141.208":
+  entity mux17bits4x1 at 1( 0) + 0 on 17;
+  architecture a_mux17bits4x1 of mux17bits4x1 at 15( 589) + 0 on 18;
+file "/home/lillo/Documents/mprocessador/" "src/ram.vhd" "1552db5d33299c4cffdec92de113ba71dd119f69" "20250203055141.209":
+  entity ram at 1( 0) + 0 on 19;
+  architecture a_ram of ram at 15( 463) + 0 on 20;
+file "/home/lillo/Documents/mprocessador/" "src/register16bits.vhd" "5a98d289df8e806c9558a74fdf364e106eef74f2" "20250203055141.210":
+  entity register16bits at 1( 0) + 0 on 21;
+  architecture a_register16bits of register16bits at 15( 352) + 0 on 22;
+file "/home/lillo/Documents/mprocessador/" "src/register17bits.vhd" "b8d662c02ba0e791343cd1222870197ba4977c4b" "20250203055141.211":
+  entity register17bits at 1( 0) + 0 on 23;
+  architecture a_register17bits of register17bits at 15( 364) + 0 on 24;
+file "/home/lillo/Documents/mprocessador/" "src/registerBank.vhd" "71013e7ea63915a10c5afbe0a590dbd966c06c9e" "20250203055141.213":
+  entity registerbank at 1( 0) + 0 on 25;
+  architecture a_registerbank of registerbank at 27( 1013) + 0 on 26;
+file "/home/lillo/Documents/mprocessador/" "src/rom.vhd" "356d13e4d7df6a7367bde1e2f254f1e5b16905ed" "20250203055141.216":
+  entity rom at 1( 0) + 0 on 27;
+  architecture a_rom of rom at 12( 264) + 0 on 28;
+file "/home/lillo/Documents/mprocessador/" "src/stateMachine.vhd" "f8f5a16846685bda79e9d42cc8fc47c8324e070f" "20250203055141.217":
+  entity statemachine at 1( 0) + 0 on 29;
+  architecture a_statemachine of statemachine at 12( 213) + 0 on 30;
+file "/home/lillo/Documents/mprocessador/" "src/sum_sub.vhd" "9dec5b98446fb8e977ee91e0555c64b3c1d958f2" "20250203055141.218":
+  entity sum_sub at 1( 0) + 0 on 31;
+  architecture a_sum_sub of sum_sub at 11( 210) + 0 on 32;
+file "/home/lillo/Documents/mprocessador/" "src/t_flip_flop.vhd" "d365d14e0f25a137dfd6aa8ff1f333d0248bf252" "20250203055141.219":
+  entity t_flip_flop at 1( 0) + 0 on 33;
+  architecture a_t_flip_flop of t_flip_flop at 14( 276) + 0 on 34;
+file "/home/lillo/Documents/mprocessador/" "src/top_level.vhd" "9ed4e30fec0abc821a32b5a794c15d0cd6695dbd" "20250203055141.222":
+  entity top_level at 1( 0) + 0 on 35;
+  architecture a_top_level of top_level at 22( 787) + 0 on 36;
+file "/home/lillo/Documents/mprocessador/" "src/UC.vhd" "ae46034b92003be899b51e61f214d482e5853e71" "20250203055141.224":
+  entity uc at 1( 0) + 0 on 37;
+  architecture a_uc of uc at 27( 922) + 0 on 38;
+file "/home/lillo/Documents/mprocessador/" "src/ULA.vhd" "302ac99edec4c80abaabe291a2088b4572bbb5b4" "20250203055141.225":
+  entity ula at 1( 0) + 0 on 39;
+  architecture a_ula of ula at 19( 483) + 0 on 40;

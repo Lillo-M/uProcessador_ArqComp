@@ -4,11 +4,11 @@ use IEEE.numeric_std.all;
 
 entity register17bits is
   port (
-    data_in  : in  UNSIGNED (16 downto 0);
-    data_out : out UNSIGNED (16 downto 0);
-    wr_en    : in std_logic;
-    reset    : in std_logic;
-    clk      : in std_logic
+    data_in  : in  UNSIGNED (16 downto 0) := '0' & x"0000";
+    data_out : out UNSIGNED (16 downto 0) := '0' & x"0000";
+    wr_en    : in std_logic := '0';
+    reset    : in std_logic := '0';
+    clk      : in std_logic := '0'
   );
 end entity register17bits;
 

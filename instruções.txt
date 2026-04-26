@@ -1,0 +1,198 @@
+R --  funct register0 register1 opcode
+I --  const register opcode
+B --  const opcode
+
+
+
+
+ADD A, rX
+opcode -> soma
+número do registrador
+funct -> soma
+
+LD rX, const
+opcode -> soma
+número do registrador
+funct -> soma
+
+
+SUB A, rX
+opcode -> soma
+número do registrador
+funct -> sub
+
+SUBI A, const
+opcode -> imediato
+constante n Bits
+funct -> sub
+
+opcional:
+  ADDI A, const
+  opcode -> imediato
+  constante n Bits
+  funct -> soma
+
+MOV rX, A
+opcode -> MOV
+número do registrador
+funct -> Acumulador para Reg.
+
+MOV A, rX
+opcode -> MOV
+número do registrador
+funct -> Reg. para Acumulador
+
+SUBB??
+
+CMPR A, rY
+opcode -> CMP
+número do registrador
+funct -> ?
+
+
+CMPI A, const
+opcode -> imediato
+constante n Bits
+funct -> CMP
+
+JUMP endereço
+opcode -> jump
+constante n Bits -> endereço
+
+
+
+BEQ const
+
+BHS const
+
+Uma subtração com _Borrow_ ocorre na operação $a − b$ quando b é maior 
+que a, tratando-os como números sem sinal.
+O hardware do computador pode detectar um empréstimo 
+na subtração verificando se ocorreu um "carry" na adição
+correspondente. Se não houver carry na adição,
+então há um _Borrow_ na subtração.
+Se houver carry na adição, então não há empréstimo na subtração.
+
+SUBB = a + not(b) + Cf, sendo Cf a Carry Flag.
+
+
+
+Lab5
+R --  register opcode
+I --  const opcode
+B --  const opcode
+J --  const opcode
+
+LD A, const
+opcode = 0001
+
+ADD A, Rx
+opcode = 0010
+
+SUBI A, const
+opcode = 0011
+
+SUBB A, const
+opcode = 0100
+
+CMPR A, Rx
+opcode = 0101
+
+CMPI A, const
+opcode = 0110
+
+MOVE A, Rx (mover o conteudo de A para Rx)
+opcode = 0111
+
+MOVE Rx, A -> (mover o conteudo de Rx para A)
+opcode = 1000
+
+LW A, (Rx) -> (carregar o conteudo do endereço apontado por Rx em A)
+opcode = 1001
+
+SW A, (Rx) -> (carregar o conteudo de A para o endereço apontado por Rx)
+opcode = 1010
+
+BLT const
+opcode = 1100
+
+BHS const
+opcode = 1101
+
+BEQ const
+opcode = 1110
+
+JUMP const -> (ja tá implementada mas é meio capenga)
+opcode = 1111
+
+B J I 
+| const 16 downto 4 | opcode 3 downto 0 |
+  0 0000 0000 0000          0000
+
+R
+| rs1 ..3 bits.. | opcode  3 downto 0|
+      000                 0000
+
+OBS:
+Nosso banco de registradores começa com r0 e vai até r4,
+totalizando 5 registradores.
+
+Assembly Lab5:
+      
+      ld A, 5
+      mv A, r2
+      ld A, 8
+      mv A, r3
+      mv r2, A
+      add A, r3
+      subi A, 1
+      mv A, r4
+      j, 20
+      ld 0, A
+      mv A, r4
+      mv r4, A
+      mv A, r2
+      j 4    ;Pula para instrução 'C'
+      ld 0, A
+      mv A, r2
+
+
+lab 6
+
+  R3 0
+  R4 0
+
+  R4 <- 0 + 0
+  R3 <= r3 +1 = 1
+
+  R3 = 1
+  R4 = 0
+
+  R4 <- 1 + 0 = 1
+  R3 = 2
+
+  R4 = 1 + 2 = 3
+  R3 = 2 + 1 = 3
+
+  R4 = 3 + 3 = 6
+  R3 = 4
+
+  R4 = 6 + 4 = 10
+  R3 = 5
+
+
+
+      0   => '0' & x"000" & "0001", -- Load 0 to A  // A.
+      1   => '0' & x"003" & "0111", -- MOVE A to R3 // A.
+      2   => '0' & x"004" & "0111", -- MOVE A to R4 // B.
+      3   => '0' & x"004" & "1000", -- MOVE R4 to A // C.
+      4   => '0' & x"003" & "0010", -- ADD A, R3    // C.
+      5   => '0' & x"004" & "0111", -- MOVE A to R4 // C.
+      6   => '0' & x"003" & "1000", -- MOVE R3 to A // D.
+      7   => '1' & x"FFF" & "0011", -- SUBI A, -1   // D.
+      8   => '0' & x"003" & "0111", -- MOVE A to R3 // D.
+      9   => '0' & x"01D" & "0001", -- Load 29 to A // E.
+      10  => '0' & x"003" & "0101", -- CMPR A, R3   // E.
+      11  => '1' & x"FF8" & "1101", -- BHS          // E.
+      12  => '0' & x"004" & "1000", -- MOVE R4 to A // F.
+      13  => '0' & x"005" & "0111", -- MOVE A to R5 // F.
